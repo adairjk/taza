@@ -18,55 +18,55 @@ describe Taza::Settings do
   end
 
   it "should use environment variable for browser settings" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     ENV['BROWSER'] = 'foo'
     expect(Taza::Settings.config(@site_name)[:browser]).to eql 'foo'
   end
 
   it "should provide default values if no config file or environment settings provided" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     expect(Taza::Settings.config(@site_name)[:driver]).to eql 'selenium'
     expect(Taza::Settings.config(@site_name)[:browser]).to eql 'firefox'
     expect(Taza::Settings.config(@site_name)[:attach]).to eql false
   end
 
   it "should use environment variable for driver settings" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     ENV['DRIVER'] = 'bar'
     expect(Taza::Settings.config(@site_name)[:driver]).to eql 'bar'
   end
 
   it "should be able to load the site yml" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     expect(Taza::Settings.config("SiteName")[:url]).to eql 'http://google.com'
   end
 
   it "should be able to load a alternate site url" do
     ENV['TAZA_ENV'] = 'clown_shoes'
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     expect(Taza::Settings.config("SiteName")[:url]).to eql 'http://clownshoes.com'
   end
 
   it "should use the config file's variable for browser settings if no environment variable is set" do
     UserChoices::YamlConfigFileSource.any_instance.stubs(:format_specific_reading).returns({'browser' => 'fu'})
-    Taza::Settings.stubs(:path).returns("#{@original_directory}//spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}//spec/sandbox1")
     expect(Taza::Settings.config(@site_name)[:browser]).to eql 'fu'
   end
 
   it "should use the ENV variables if specfied instead of config files" do
     ENV['BROWSER'] = 'opera'
     UserChoices::YamlConfigFileSource.any_instance.stubs(:format_specific_reading).returns({'browser' => 'fu'})
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     expect(Taza::Settings.config(@site_name)[:browser]).to eql 'opera'
   end
 
   it "should use the correct config file to set defaults" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     Taza::Settings.stubs(:config_file_path).returns('spec/sandbox/config.yml')
   end
 
   it "should raise error for a config file that doesnot exist" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox/file_not_exists.yml")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1/file_not_exists.yml")
     expect(lambda {Taza::Settings.config}).to raise_error(ArgumentError)
   end
 
@@ -76,7 +76,7 @@ describe Taza::Settings do
 
   it "should use the config file's variable for driver settings if no environment variable is set" do
     UserChoices::YamlConfigFileSource.any_instance.stubs(:format_specific_reading).returns({'driver' => 'fun'})
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     expect(Taza::Settings.config(@site_name)[:driver]).to eql 'fun'
   end
 
@@ -85,7 +85,7 @@ describe Taza::Settings do
   end
 
   it "a site should be able to load its settings" do
-    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox")
+    Taza::Settings.stubs(:path).returns("#{@original_directory}/spec/sandbox1")
     expect(SiteName.settings[:url]).to eql 'http://google.com'
   end
 

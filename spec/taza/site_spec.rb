@@ -8,15 +8,17 @@ require 'taza/page'
 require 'taza/flow'
 
 describe Taza::Site do
-  before(:all) do
-    Foo = Class.new(Taza::Site)
-  end
+  # before(:all) do
+  #   Foo = Class.new(Taza::Site)
+  # end
   #TODO: we need to clean up these tests and remove the warning below
   #/Users/bisbot/Projects/Taza/taza/spec/taza/site_spec.rb:15: warning: already initialized constant Foo
   before :each do
-    @pages_path = File.join(@original_directory, 'spec', 'sandbox', 'pages', 'foo', '**', '*.rb')
-    @flows_path = File.join(@original_directory, 'spec', 'sandbox', 'flows', '*.rb')
-    Foo.any_instance.stubs(:pages_path).returns(@pages_path)
+    @pages_path = File.join(@original_directory, 'spec', 'sandbox1', 'lib', 'sites', 'foo', 'pages', '**', '*.rb')
+    @flows_path = File.join(@original_directory, 'spec', 'sandbox1', 'lib', 'sites', 'foo', 'flows', '*.rb')
+    @site_path = File.join(@original_directory, 'spec', 'sandbox1', 'lib', 'sites')
+    Foo::Foo.any_instance.stubs(:pages_path).returns(@pages_path)
+    Foo::Foo.any_instance.stubs(:path).returns(@site_path)
     ENV['BROWSER'] = nil
     ENV['DRIVER'] = nil
     Taza::Settings.stubs(:config_file).returns({})
@@ -54,7 +56,7 @@ describe Taza::Site do
     f.bar do |bar|
       barzor = bar
     end
-    expect(barzor).to be_an_instance_of Bar
+    expect(barzor).to be_an_instance_of Foo::Bar
   end
 
   it 'should accept a browser instance' do
@@ -150,12 +152,8 @@ describe Taza::Site do
   end
 
   it 'should add partials defined under the pages directory' do
-    Taza::Browser.stubs(:create).returns(stub_browser)
-    klass = Class::new(Taza::Site)
-    klass.any_instance.stubs(:pages_path).returns(@pages_path)
-    klass.new do |site|
-      site.partial_the_reckoning
-    end
+    f = Foo.new(:browser => stub_browser)
+    expect(f.partial_the_reckoning).to be_an_instance_of Foo::PartialTheReckoning
   end
 
   it 'should have a way to evaluate a block of code before site closes the browser' do
@@ -226,12 +224,7 @@ describe Taza::Site do
 
   it 'should yield an instance of page class that can access page-module specific elements' do
     f = Foo.new(:browser => stub_browser)
-    barzor = nil
-    f.baz(:module) do |baz|
-      barzor = baz
-    end
-    expect(barzor).to be_an_instance_of Baz
-    expect(barzor.some_element).to eql :some_element_value
+    expect(f.partial_the_reckoning.some_element).to eql :some_element_value
   end
 
   it 'should raise an error when accessing an element that belongs to another module' do

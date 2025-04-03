@@ -3,8 +3,9 @@ require 'bundler/setup'
 require 'mocha'
 require 'taza'
 require 'thor'
-require 'watir-webdriver'
+require 'watir'
 require 'selenium-webdriver'
+require_relative './sandbox1/lib/sites/foo.rb'
 
 RSpec.configure do |config|
   config.mock_with :mocha

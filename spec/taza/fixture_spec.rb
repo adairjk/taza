@@ -4,7 +4,7 @@ require 'taza/fixture'
 describe Taza::Fixture do
   before :each do
     #TODO: we should generate the base project in a temp dir
-    @base_path = File.join(@original_directory,'spec','sandbox','fixtures','')
+    @base_path = File.join(@original_directory,'spec','sandbox1','fixtures','')
   end
 
   it "should be able to load entries from fixtures" do

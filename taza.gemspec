@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<mocha>, [">= 0.9.3"])
   s.add_development_dependency(%q<rake>, [">= 0.9.2"])
   s.add_development_dependency(%q<rspec>, ["~> 3.0"])
+  s.add_development_dependency(%q<pry>, ["0.15.2"])
 end

@@ -1,8 +1,11 @@
 require 'spec_helper'
 describe "Site Specific Fixtures" do
-  Taza::Fixture.stubs(:base_path).returns(File.join('.','spec','sandbox','fixtures',''))
-  Taza.load_fixtures
-  include Taza::Fixtures::FooSite
+
+  before do
+    Taza::Fixture.stubs(:base_path).returns(File.join(PROJECT_ROOT, 'spec', 'sandbox', 'fixtures', ''))
+    Taza.load_fixtures
+    include Taza::Fixtures::FooSite
+  end
 
   it "should be able to access fixtures in sub-folders" do
     expect(bars(:foo).name).to eql 'foo'

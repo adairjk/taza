@@ -6,6 +6,9 @@ require 'thor'
 require 'watir-webdriver'
 require 'selenium-webdriver'
 
+PROJECT_ROOT = File.expand_path('../', __dir__)
+puts "Project root: #{PROJECT_ROOT}"
+
 RSpec.configure do |config|
   config.mock_with :mocha
 
